@@ -1,0 +1,37 @@
+{
+  "name": "2048 Puzzle",
+  "short_name": "2048",
+  "description": "Play the classic 2048 puzzle game inside the Base App.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/blue-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "1024x768",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshot-portrait.png",
+      "sizes": "768x1024",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["games","puzzle"],
+  "lang": "en-US"
+}
