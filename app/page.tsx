@@ -18,7 +18,18 @@ export default function Game() {
 
   // Initialize game
   useEffect(() => {
-    const savedBest = Number(localStorage.getItem("2048_best") || 0);
+    // migrate legacy best score key if present
+    const legacyKey = localStorage.getItem("2048_best");
+    const newKey = localStorage.getItem("number_puzzle_best");
+    let savedBest = 0;
+    if (newKey) {
+      savedBest = Number(newKey || 0);
+    } else if (legacyKey) {
+      savedBest = Number(legacyKey || 0);
+      try {
+        localStorage.setItem("number_puzzle_best", savedBest.toString());
+      } catch {}
+    }
     setBest(savedBest);
     initNewGame();
 
@@ -243,11 +254,75 @@ export default function Game() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [grid, gameOver, won]);
 
+  // Touch / pointer swipe handling
+  useEffect(() => {
+    const board = boardRef.current;
+    if (!board) return;
+
+    let startX = 0;
+    let startY = 0;
+    let isPointer = false;
+
+    const threshold = 30; // min px for swipe
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold) {
+        if (dx > 0) handleMove(moveRight);
+        else handleMove(moveLeft);
+      } else if (Math.abs(dy) > threshold) {
+        if (dy > 0) handleMove(moveDown);
+        else handleMove(moveUp);
+      }
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      isPointer = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      (board as HTMLElement).setPointerCapture?.(e.pointerId);
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!isPointer) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold) {
+        if (dx > 0) handleMove(moveRight);
+        else handleMove(moveLeft);
+      } else if (Math.abs(dy) > threshold) {
+        if (dy > 0) handleMove(moveDown);
+        else handleMove(moveUp);
+      }
+      isPointer = false;
+    };
+
+    board.addEventListener("touchstart", onTouchStart, { passive: true });
+    board.addEventListener("touchend", onTouchEnd);
+    board.addEventListener("pointerdown", onPointerDown);
+    board.addEventListener("pointerup", onPointerUp);
+
+    return () => {
+      board.removeEventListener("touchstart", onTouchStart);
+      board.removeEventListener("touchend", onTouchEnd);
+      board.removeEventListener("pointerdown", onPointerDown);
+      board.removeEventListener("pointerup", onPointerUp);
+    };
+  }, [grid, gameOver, won]);
+
   const shareScore = async () => {
-    const text = `I scored ${score} in 2048 — can you beat me?`;
+    const text = `I scored ${score} in Number Puzzle Game — can you beat me?`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "2048", text, url: location.href });
+        await navigator.share({ title: "Number Puzzle Game", text, url: location.href });
         return;
       }
       await navigator.clipboard.writeText(text);
@@ -260,7 +335,7 @@ export default function Game() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>2048</h1>
+        <h1 className={styles.title}>Number Puzzle Game</h1>
         <div className={styles.scores}>
           <div className={styles.scoreBox}>
             <div className={styles.scoreLabel}>Score</div>
@@ -317,7 +392,7 @@ export default function Game() {
         <div className={styles.modal}>
           <div className={styles.dialog}>
             <h2>You Win! 🎉</h2>
-            <p>You reached 2048!</p>
+            <p>You reached the target tile!</p>
             <button className={styles.button} onClick={initNewGame}>
               Play Again
             </button>
