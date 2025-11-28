@@ -14,7 +14,7 @@ export const minikitConfig = {
     signature: "Aj5Ct2B+ed7pvLXB8KN0YwmnTF/RSRwQjssEug/7hQYbrF9HxaX4UDsHFB1AR1+cIWNzkyBcP49SA6SI/0JnaRw="
   },
   miniapp: {
-    version: "0.0.1",
+    version: "1",
     name: "2048 Puzzle", 
     subtitle: "Classic sliding puzzle game",
     description: "Play the classic 2048 puzzle game inside the Base App!",
