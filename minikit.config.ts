@@ -15,9 +15,8 @@ export const minikitConfig = {
   },
   miniapp: {
     version: "1.0",
-    name: "Cubey", 
-    subtitle: "Your AI Ad Companion", 
-    description: "Ads",
+    name: "2048 Puzzle", 
+    description: "Play the classic 2048 puzzle game inside the Base App!",
     screenshotUrls: [`${ROOT_URL}/screenshot-portrait.png`],
     iconUrl: `${ROOT_URL}/blue-icon.png`,
     splashImageUrl: `${ROOT_URL}/blue-hero.png`,
