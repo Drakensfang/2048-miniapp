@@ -1,7 +1,7 @@
 {
-  "name": "2048 Puzzle",
-  "short_name": "2048",
-  "description": "Play the classic 2048 puzzle game inside the Base App.",
+  "name": "Number Puzzle Game",
+  "short_name": "Puzzle",
+  "description": "Play the classic number puzzle game inside the Base App.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

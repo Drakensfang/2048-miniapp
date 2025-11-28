@@ -1,4 +1,5 @@
 import { sdk } from '@farcaster/miniapp-sdk';
+const TARGET_TILE = 2048;
 
 (async function initApp(){
   try {
@@ -218,7 +219,7 @@ import { sdk } from '@farcaster/miniapp-sdk';
   }
 
   function checkWin(){
-    for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(grid[r][c]===2048) return true;
+    for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(grid[r][c]===TARGET_TILE) return true;
     return false;
   }
 

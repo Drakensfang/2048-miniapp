@@ -6,9 +6,9 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "Puzzle Game",
-    "subtitle": "Classic sliding puzzle",
-    "description": "Play the classic puzzle game inside the Base App.",
+    "name": "Number Puzzle Game",
+    "subtitle": "Classic number sliding puzzle",
+    "description": "Play the Number Puzzle Game inside the Base App.",
     "screenshotUrls": ["https://2048-miniapp-livid.vercel.app/screenshot-portrait.png"],
     "iconUrl": "https://2048-miniapp-livid.vercel.app/blue-icon.png",
     "splashImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
@@ -18,9 +18,9 @@
     "primaryCategory": "games",
     "tags": ["games", "puzzle"],
     "heroImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
-    "tagline": "Puzzle Game on Base",
-    "ogTitle": "Puzzle Game",
-    "ogDescription": "Play the classic Puzzle Game inside the Base app.",
+    "tagline": "Number Puzzle Game on Base",
+    "ogTitle": "Number Puzzle Game",
+    "ogDescription": "Play the Number Puzzle Game inside the Base app.",
     "ogImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
     "noindex": false
   }

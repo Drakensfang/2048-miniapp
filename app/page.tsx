@@ -5,6 +5,7 @@ import { sdk } from "@farcaster/miniapp-sdk";
 import styles from "./game.module.css";
 
 const SIZE = 4;
+const TARGET_TILE = 2048;
 
 export default function Game() {
   const [grid, setGrid] = useState<number[][]>([]);
@@ -115,7 +116,7 @@ export default function Game() {
         const newScore = prev + gain;
         if (newScore > best) {
           setBest(newScore);
-          localStorage.setItem("2048_best", newScore.toString());
+          localStorage.setItem("number_puzzle_best", newScore.toString());
         }
         return newScore;
       });
@@ -143,7 +144,7 @@ export default function Game() {
         const newScore = prev + gain;
         if (newScore > best) {
           setBest(newScore);
-          localStorage.setItem("2048_best", newScore.toString());
+          localStorage.setItem("number_puzzle_best", newScore.toString());
         }
         return newScore;
       });
@@ -190,7 +191,7 @@ export default function Game() {
   const checkWin = (currentGrid: number[][]) => {
     for (let r = 0; r < SIZE; r++) {
       for (let c = 0; c < SIZE; c++) {
-        if (currentGrid[r][c] === 2048) return true;
+        if (currentGrid[r][c] === TARGET_TILE) return true;
       }
     }
     return false;
