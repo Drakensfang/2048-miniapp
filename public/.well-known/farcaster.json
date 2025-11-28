@@ -18,7 +18,7 @@
     "primaryCategory": "games",
     "tags": ["games", "puzzle"],
     "heroImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
-    "tagline": "Play the classic Puzzle Game",
+    "tagline": "Play the classic Puzzle Game inside Base",
     "ogTitle": "Puzzle Game",
     "ogDescription": "Play the classic Puzzle Game inside the Base app.",
     "ogImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png"
