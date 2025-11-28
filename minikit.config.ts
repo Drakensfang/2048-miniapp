@@ -31,6 +31,7 @@ export const minikitConfig = {
     ogTitle: "Puzzle Game",
     ogDescription: "Play the classic Puzzle Game inside Base.",
     ogImageUrl: `${ROOT_URL}/blue-hero.png`,
+    noindex: false,
   },
 } as const;
 

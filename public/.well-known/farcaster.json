@@ -21,6 +21,7 @@
     "tagline": "Play the classic Puzzle Game inside Base",
     "ogTitle": "Puzzle Game",
     "ogDescription": "Play the classic Puzzle Game inside the Base app.",
-    "ogImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png"
+    "ogImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
+    "noindex": false
   }
 }
