@@ -16,7 +16,7 @@
     "homeUrl": "https://2048-miniapp-livid.vercel.app",
     "webhookUrl": "https://2048-miniapp-livid.vercel.app/api/webhook",
     "primaryCategory": "games",
-    "tags": ["games", "puzzle", "2048"],
+    "tags": ["games", "puzzle"],
     "heroImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
     "tagline": "Play 2048 inside Base",
     "ogTitle": "2048 Puzzle",
