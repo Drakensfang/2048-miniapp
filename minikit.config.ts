@@ -25,7 +25,7 @@ export const minikitConfig = {
     homeUrl: ROOT_URL,
     webhookUrl: `${ROOT_URL}/api/webhook`,
     primaryCategory: "games",
-    tags: ["games", "puzzle", "2048"],
+    tags: ["games", "puzzle"],
     heroImageUrl: `${ROOT_URL}/blue-hero.png`, 
     tagline: "Play 2048 inside Base",
     ogTitle: "2048 Puzzle",
