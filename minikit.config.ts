@@ -14,7 +14,7 @@ export const minikitConfig = {
     signature: ""
   },
   miniapp: {
-    version: "1",
+    version: "1.0",
     name: "Cubey", 
     subtitle: "Your AI Ad Companion", 
     description: "Ads",

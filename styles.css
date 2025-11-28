@@ -1,0 +1,95 @@
+/* General Page Layout */
+body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title */
+h1 {
+  margin-top: 20px;
+  color: #776e65;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+/* Game Container */
+#game-container {
+  width: 320px;
+  height: 320px;
+  background: #bbada0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Each Tile */
+.tile {
+  width: 100%;
+  height: 100%;
+  background: #cdc1b4;
+  border-radius: 5px;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.15s ease-in-out;
+}
+
+/* Restart Button */
+#restart-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  border: none;
+  background: #8f7a66;
+  color: white;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#restart-btn:hover {
+  background: #9e8b76;
+}
+
+/* Game Over Overlay */
+#game-over {
+  position: absolute;
+  top: 140px;
+  width: 320px;
+  height: 320px;
+  background: rgba(238, 228, 218, 0.73);
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-over h2 {
+  font-size: 30px;
+  color: #776e65;
+}
+
+#game-over button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#game-over button:hover {
+  background: #9e8b76;
+}
