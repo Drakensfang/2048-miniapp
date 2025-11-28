@@ -9,18 +9,18 @@
     "name": "2048 Puzzle",
     "subtitle": "Classic sliding puzzle",
     "description": "Play the classic 2048 puzzle game inside the Base App.",
-    "screenshotUrls": ["/screenshot-portrait.png"],
-    "iconUrl": "/blue-icon.png",
-    "splashImageUrl": "/blue-hero.png",
+    "screenshotUrls": ["https://2048-miniapp-livid.vercel.app/screenshot-portrait.png"],
+    "iconUrl": "https://2048-miniapp-livid.vercel.app/blue-icon.png",
+    "splashImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
     "splashBackgroundColor": "#000000",
-    "homeUrl": "/",
-    "webhookUrl": "/api/webhook",
+    "homeUrl": "https://2048-miniapp-livid.vercel.app",
+    "webhookUrl": "https://2048-miniapp-livid.vercel.app/api/webhook",
     "primaryCategory": "games",
     "tags": ["games", "puzzle", "2048"],
-    "heroImageUrl": "/blue-hero.png",
+    "heroImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png",
     "tagline": "Play 2048 inside Base",
     "ogTitle": "2048 Puzzle",
     "ogDescription": "Play 2048 inside the Base app.",
-    "ogImageUrl": "/blue-hero.png"
+    "ogImageUrl": "https://2048-miniapp-livid.vercel.app/blue-hero.png"
   }
 }
