@@ -21,7 +21,20 @@ import { sdk } from '@farcaster/miniapp-sdk';
   let grid = [];
   const SIZE = 4;
   let score = 0;
-  let best = Number(localStorage.getItem('2048_best') || 0);
+  // migrate legacy best key to new key 'number_puzzle_best'
+  let best = 0;
+  try {
+    const newBest = localStorage.getItem('number_puzzle_best');
+    const legacyBest = localStorage.getItem('2048_best');
+    if (newBest) {
+      best = Number(newBest || 0);
+    } else if (legacyBest) {
+      best = Number(legacyBest || 0);
+      localStorage.setItem('number_puzzle_best', best);
+    }
+  } catch (e) {
+    best = 0;
+  }
 
   bestValEl.textContent = best;
 
@@ -56,7 +69,7 @@ import { sdk } from '@farcaster/miniapp-sdk';
     if(score > best){
       best = score;
       bestValEl.textContent = best;
-      localStorage.setItem('2048_best', best);
+      try { localStorage.setItem('number_puzzle_best', best); } catch(e) {}
     }
   }
 
@@ -218,7 +231,7 @@ import { sdk } from '@farcaster/miniapp-sdk';
       setTimeout(()=> {
         addRandomTile();
         render();
-        if(checkWin()) showModal('You win 🎉', 'You reached 2048!', true);
+        if(checkWin()) showModal('You win 🎉', 'You reached the target tile!', true);
         else if(!hasMoves()) showModal('Game Over', 'No more moves available.', false);
       }, 160); // wait for animation
     }
@@ -258,10 +271,10 @@ import { sdk } from '@farcaster/miniapp-sdk';
 
   // share function: Web Share API -> Farcaster SDK if available -> clipboard fallback
   async function shareScore(){
-    const text = `I scored ${score} in 2048 — can you beat me?`;
+    const text = `I scored ${score} in Number Puzzle Game — can you beat me?`;
     try {
       if(navigator.share){
-        await navigator.share({ title: '2048', text, url: location.href });
+        await navigator.share({ title: 'Number Puzzle Game', text, url: location.href });
         return;
       }
       // try Farcaster SDK share action if available
