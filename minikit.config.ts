@@ -27,7 +27,7 @@ export const minikitConfig = {
     primaryCategory: "games",
     tags: ["games", "puzzle"],
     heroImageUrl: `${ROOT_URL}/blue-hero.png`, 
-    tagline: "Play the classic Puzzle Game inside Base",
+    tagline: "Puzzle Game on Base",
     ogTitle: "Puzzle Game",
     ogDescription: "Play the classic Puzzle Game inside Base.",
     ogImageUrl: `${ROOT_URL}/blue-hero.png`,
