@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { minikitConfig } from "@/minikit.config";
+import { minikitConfig } from "../../../minikit.config";
 
 export async function GET() {
   return NextResponse.json({
