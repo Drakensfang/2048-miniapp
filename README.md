@@ -55,6 +55,29 @@ The `minikit.config.ts` file configures your manifest located at `app/.well-know
 
 To personalize your app, change the `name`, `subtitle`, and `description` fields and add images to your `/public` folder. Then update their URLs in the file.
 
+## Sound Effects
+
+The 2048 game includes immersive sound effects to enhance the gaming experience:
+
+### Features
+
+* **Movement Sound**: Plays when tiles slide across the board
+* **Merge Sound**: Plays when two tiles combine
+* **Game Over Sound**: Plays when no more moves are available
+
+### Controls
+
+Click the speaker button (🔊/🔇) in the top-right corner to toggle sound effects on or off. Your preference is automatically saved and will persist across sessions.
+
+### Sound Files
+
+Sound files are located in `public/sounds/`:
+* `move.mp3` - Tile movement sound
+* `merge.mp3` - Tile merge sound  
+* `gameover.mp3` - Game over sound
+
+The current files are minimal placeholders. You can replace them with custom audio files to personalize the experience.
+
 ## Deployment
 
 ### 1. Deploy to Vercel
