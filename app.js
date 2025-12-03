@@ -95,7 +95,7 @@ const TARGET_TILE = 2048;
     setMuted(muted) {
       this.muted = muted;
       try {
-        localStorage.setItem('number_puzzle_muted', muted);
+        localStorage.setItem('number_puzzle_muted', String(muted));
       } catch (e) {
         console.warn('Failed to save mute preference:', e);
       }
@@ -254,7 +254,9 @@ const TARGET_TILE = 2048;
       const { newRow, gained, merged } = slideRowLeft(rev);
       const out = newRow.reverse();
       if(!arraysEqual(out, grid[r])){
-        moved = true; grid[r] = out; gain += gained;
+        moved = true;
+        grid[r] = out;
+        gain += gained;
         if(merged) hadMerge = true;
       }
     }
