@@ -51,8 +51,11 @@ export default function Game() {
   const getTilePosition = (r: number, c: number) => {
     const gap = 12;
     const boardWidth = boardRef.current?.clientWidth || 340;
+    const boardHeight = boardRef.current?.clientHeight || 340;
+    // Use the smaller dimension to ensure square tiles
+    const boardSize = Math.min(boardWidth, boardHeight);
     const totalGap = gap * (SIZE - 1);
-    const inner = boardWidth - totalGap - 24;
+    const inner = boardSize - totalGap - 24;
     const cell = Math.floor(inner / SIZE);
     const left = c * (cell + gap);
     const top = r * (cell + gap);
@@ -359,6 +362,12 @@ export default function Game() {
       </div>
 
       <div className={styles.board} ref={boardRef}>
+        {/* Background grid cells */}
+        {Array.from({ length: SIZE * SIZE }).map((_, i) => (
+          <div key={`bg-${i}`} className={styles.cellBg} />
+        ))}
+        
+        {/* Active tiles */}
         {grid.map((row, r) =>
           row.map((value, c) =>
             value !== 0 ? (

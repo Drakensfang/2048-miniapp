@@ -1,13 +1,24 @@
-import { sdk } from '@farcaster/miniapp-sdk';
-const TARGET_TILE = 2048;
-
-(async function initApp(){
+(async function() {
+  // Try to import SDK, but make it optional for standalone use
+  let sdk = null;
   try {
-    await sdk.actions.ready();
+    const module = await import('@farcaster/miniapp-sdk');
+    sdk = module.sdk;
   } catch (err) {
-    // if SDK not present, continue — game still works offline
-    console.warn("Farcaster SDK not available or ready failed:", err);
+    console.warn("Farcaster SDK not available:", err);
   }
+
+  const TARGET_TILE = 2048;
+
+  (async function initApp(){
+    if (sdk) {
+      try {
+        await sdk.actions.ready();
+      } catch (err) {
+        // if SDK not present, continue — game still works offline
+        console.warn("Farcaster SDK not available or ready failed:", err);
+      }
+    }
 
   // DOM
   const boardEl = document.getElementById('board');
@@ -114,7 +125,9 @@ const TARGET_TILE = 2048;
   function getCellSize() {
     const gap = 12; // matches CSS
     const totalGap = gap * (SIZE - 1);
-    const inner = boardEl.clientWidth - totalGap - 24; // board padding 12px both sides
+    // Use the smaller dimension to ensure squares even if board isn't perfectly square
+    const boardSize = Math.min(boardEl.clientWidth, boardEl.clientHeight);
+    const inner = boardSize - totalGap - 24; // board padding 12px both sides
     const cell = Math.floor(inner / SIZE);
     return { cell, gap };
   }
@@ -455,4 +468,5 @@ const TARGET_TILE = 2048;
 
   // helper to detect win/over after every move is handled; integrated in handleMove
 
+  })();
 })();
