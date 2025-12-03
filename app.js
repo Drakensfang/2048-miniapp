@@ -14,6 +14,7 @@ const TARGET_TILE = 2048;
   const tileLayer = document.getElementById('tileLayer');
   const restartBtn = document.getElementById('restartBtn');
   const shareBtn = document.getElementById('shareBtn');
+  const muteBtn = document.getElementById('muteBtn');
   const scoreValEl = document.getElementById('scoreVal');
   const bestValEl = document.getElementById('bestVal');
   const modalRoot = document.getElementById('modalRoot');
@@ -38,6 +39,74 @@ const TARGET_TILE = 2048;
   }
 
   bestValEl.textContent = best;
+
+  // Sound Manager
+  class SoundManager {
+    constructor() {
+      this.sounds = {
+        move: new Audio('/sounds/move.mp3'),
+        merge: new Audio('/sounds/merge.mp3'),
+        gameover: new Audio('/sounds/gameover.mp3')
+      };
+      
+      // Preload all sounds
+      Object.values(this.sounds).forEach(sound => {
+        sound.preload = 'auto';
+        sound.volume = 0.5;
+      });
+      
+      // Load mute preference from localStorage
+      try {
+        const mutePreference = localStorage.getItem('number_puzzle_muted');
+        this.muted = mutePreference === 'true';
+      } catch (e) {
+        this.muted = false;
+      }
+      
+      // Track last play time to prevent excessive overlapping
+      this.lastPlayTime = {};
+      this.minInterval = 50; // minimum ms between same sound plays
+    }
+    
+    play(soundName) {
+      if (this.muted) return;
+      
+      const sound = this.sounds[soundName];
+      if (!sound) return;
+      
+      // Prevent excessive overlap
+      const now = Date.now();
+      if (this.lastPlayTime[soundName] && now - this.lastPlayTime[soundName] < this.minInterval) {
+        return;
+      }
+      this.lastPlayTime[soundName] = now;
+      
+      // Clone and play to allow overlapping sounds when needed
+      try {
+        sound.currentTime = 0;
+        sound.play().catch(err => {
+          console.warn(`Failed to play ${soundName} sound:`, err);
+        });
+      } catch (err) {
+        console.warn(`Error playing ${soundName} sound:`, err);
+      }
+    }
+    
+    setMuted(muted) {
+      this.muted = muted;
+      try {
+        localStorage.setItem('number_puzzle_muted', muted);
+      } catch (e) {
+        console.warn('Failed to save mute preference:', e);
+      }
+    }
+    
+    isMuted() {
+      return this.muted;
+    }
+  }
+  
+  const soundManager = new SoundManager();
 
   // tile visuals config
   const boardRect = boardEl.getBoundingClientRect();
@@ -145,46 +214,52 @@ const TARGET_TILE = 2048;
   function slideRowLeft(row){
     const arr = row.filter(v=>v!==0);
     let gained = 0;
+    let merged = false;
     for(let i=0;i<arr.length-1;i++){
       if(arr[i] === arr[i+1]){
         arr[i] *= 2;
         gained += arr[i];
         arr.splice(i+1,1);
+        merged = true;
       }
     }
     while(arr.length < SIZE) arr.push(0);
-    return { newRow: arr, gained };
+    return { newRow: arr, gained, merged };
   }
 
   function moveLeft(){
     let moved = false;
     let gain = 0;
+    let hadMerge = false;
     for(let r=0;r<SIZE;r++){
-      const { newRow, gained } = slideRowLeft(grid[r]);
+      const { newRow, gained, merged } = slideRowLeft(grid[r]);
       if(!arraysEqual(newRow, grid[r])){
         moved = true;
         grid[r] = newRow;
         gain += gained;
+        if(merged) hadMerge = true;
       }
     }
     if(gain>0) updateScore(gain);
-    return moved;
+    return { moved, hadMerge };
   }
 
   function moveRight(){
     // reverse each row, slide left, reverse back
     let moved = false;
     let gain = 0;
+    let hadMerge = false;
     for(let r=0;r<SIZE;r++){
       const rev = [...grid[r]].reverse();
-      const { newRow, gained } = slideRowLeft(rev);
+      const { newRow, gained, merged } = slideRowLeft(rev);
       const out = newRow.reverse();
       if(!arraysEqual(out, grid[r])){
         moved = true; grid[r] = out; gain += gained;
+        if(merged) hadMerge = true;
       }
     }
     if(gain>0) updateScore(gain);
-    return moved;
+    return { moved, hadMerge };
   }
 
   function transpose(m){
@@ -193,16 +268,16 @@ const TARGET_TILE = 2048;
 
   function moveUp(){
     grid = transpose(grid);
-    const moved = moveLeft();
+    const result = moveLeft();
     grid = transpose(grid);
-    return moved;
+    return result;
   }
 
   function moveDown(){
     grid = transpose(grid);
-    const moved = moveRight();
+    const result = moveRight();
     grid = transpose(grid);
-    return moved;
+    return result;
   }
 
   function arraysEqual(a,b){
@@ -226,14 +301,24 @@ const TARGET_TILE = 2048;
   // Input handling
   let startX=null, startY=null;
   function handleMove(makeMove){
-    const moved = makeMove();
-    if(moved){
+    const result = makeMove();
+    if(result.moved){
+      // Play appropriate sound
+      if(result.hadMerge){
+        soundManager.play('merge');
+      } else {
+        soundManager.play('move');
+      }
+      
       render(); // re-render visuals
       setTimeout(()=> {
         addRandomTile();
         render();
         if(checkWin()) showModal('You win 🎉', 'You reached the target tile!', true);
-        else if(!hasMoves()) showModal('Game Over', 'No more moves available.', false);
+        else if(!hasMoves()) {
+          soundManager.play('gameover');
+          showModal('Game Over', 'No more moves available.', false);
+        }
       }, 160); // wait for animation
     }
   }
@@ -297,6 +382,22 @@ const TARGET_TILE = 2048;
     score = 0; scoreValEl.textContent = 0;
     initNewGame();
   });
+
+  // Mute button functionality
+  function updateMuteButton() {
+    if (muteBtn) {
+      muteBtn.textContent = soundManager.isMuted() ? '🔇' : '🔊';
+      muteBtn.title = soundManager.isMuted() ? 'Unmute sounds' : 'Mute sounds';
+    }
+  }
+  
+  if (muteBtn) {
+    muteBtn.addEventListener('click', () => {
+      soundManager.setMuted(!soundManager.isMuted());
+      updateMuteButton();
+    });
+    updateMuteButton(); // Initialize button state
+  }
 
   // modal helper
   function showModal(title, text, isWin){
