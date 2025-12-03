@@ -33,11 +33,12 @@
 }
 
 .scoreBox {
-  background: #bbada0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 6px;
   padding: 8px 12px;
   text-align: center;
   min-width: 80px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .scoreLabel {
@@ -65,19 +66,20 @@
   flex: 1;
   min-width: 80px;
   padding: 10px 16px;
-  background: white;
-  border: 2px solid #bbada0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s;
-  color: #3c3a32;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .button:hover {
-  background: #f0e8da;
-  transform: scale(1.02);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
 .button:active {
@@ -88,10 +90,16 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  background: #bbada0;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  border-radius: 8px;
   padding: 12px;
   aspect-ratio: 1;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.cellBg {
+  background: rgba(205, 193, 180, 0.5);
+  border-radius: 4px;
 }
 
 .tile {
@@ -177,7 +185,14 @@
   background: #edc22e;
   color: #3c3a32;
   font-size: 20px;
-  box-shadow: 0 0 20px rgba(237, 194, 46, 0.6);
+  box-shadow: 0 0 30px rgba(237, 194, 46, 0.5), 0 0 10px rgba(237, 194, 46, 0.8);
+}
+
+.v4096 {
+  background: #3c3a32;
+  color: white;
+  font-size: 18px;
+  box-shadow: 0 0 30px rgba(60, 58, 50, 0.5);
 }
 
 .modal {

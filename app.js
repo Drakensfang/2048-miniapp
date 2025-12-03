@@ -45,7 +45,9 @@ const TARGET_TILE = 2048;
   function getCellSize() {
     const gap = 12; // matches CSS
     const totalGap = gap * (SIZE - 1);
-    const inner = boardEl.clientWidth - totalGap - 24; // board padding 12px both sides
+    // Use the smaller dimension to ensure squares even if board isn't perfectly square
+    const boardSize = Math.min(boardEl.clientWidth, boardEl.clientHeight);
+    const inner = boardSize - totalGap - 24; // board padding 12px both sides
     const cell = Math.floor(inner / SIZE);
     return { cell, gap };
   }
